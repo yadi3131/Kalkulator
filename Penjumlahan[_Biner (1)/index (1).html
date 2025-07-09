@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kalkulator Konversi Bilangan dengan Animasi Geometri Lengkap</title>
+  <style>
+    /* === Background Justin Bieber === */
+    body::before {
+      content: "";
+      background: url('animasi-bergerak-justin-bieber-0028.gif') center center / cover no-repeat fixed;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.25;
+      filter: blur(3px);
+      animation: bgMove 60s infinite linear;
+    }
+
+    @keyframes bgMove {
+      0% { background-position: center top; }
+      50% { background-position: center center; }
+      100% { background-position: center bottom; }
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #001f3f, #003366, #001a33);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      overflow-y: auto;
+      margin: 0;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      font-size: 2.4rem;
+      margin-bottom: 25px;
+      color: #66ccff;
+      text-shadow: 0 0 10px #66ccff, 0 0 20px #3399ff;
+      animation: glowPulse 3s ease-in-out infinite alternate;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    @keyframes glowPulse {
+      0% { text-shadow: 0 0 5px #66ccff, 0 0 10px #3399ff; }
+      100% { text-shadow: 0 0 20px #66ccff, 0 0 40px #3399ff; }
+    }
+
+    .container {
+      background: rgba(0, 25, 51, 0.85);
+      padding: 30px;
+      border-radius: 15px;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 0 25px rgba(51, 153, 255, 0.6);
+      backdrop-filter: blur(10px);
+      border: 2px solid #3399ff;
+      animation: containerPulse 6s ease-in-out infinite alternate;
+      box-sizing: border-box;
+      margin-bottom: 30px;
+      position: relative;
+      z-index: 10;
+    }
+
+    @keyframes containerPulse {
+      0% { box-shadow: 0 0 15px rgba(51, 153, 255, 0.4); border-color: #2a8fff; }
+      100% { box-shadow: 0 0 35px rgba(51, 153, 255, 0.9); border-color: #66ccff; }
+    }
+
+    label, select, input, button {
+      width: 100%;
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+      transition: box-shadow 0.3s ease;
+      position: relative;
+      z-index: 11;
+    }
+
+    input, select {
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      background: #003366;
+      color: #cce7ff;
+      box-shadow: inset 0 0 5px #3399ff;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      box-shadow: 0 0 10px #66ccff;
+      background: #004080;
+      color: white;
+    }
+
+    button {
+      background-color: #3399ff;
+      color: white;
+      font-weight: bold;
+      padding: 14px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(51, 153, 255, 0.6);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+      position: relative;
+      z-index: 11;
+      animation: btnGlow 3s ease-in-out infinite alternate;
+    }
+
+    button:hover {
+      background-color: #66ccff;
+      box-shadow: 0 8px 25px rgba(102, 204, 255, 0.8);
+      transform: scale(1.05);
+    }
+
+    button:active {
+      transform: scale(0.98);
+      box-shadow: 0 4px 10px rgba(102, 204, 255, 0.6);
+    }
+
+    @keyframes btnGlow {
+      0% { box-shadow: 0 5px 15px rgba(51, 153, 255, 0.6); }
+      100% { box-shadow: 0 10px 30px rgba(102, 204, 255, 1); }
+    }
+
+    .output {
+      background: #00264d;
+      padding: 20px;
+      border-radius: 10px;
+      white-space: pre-wrap;
+      box-shadow: inset 0 0 10px #3399ff;
+      font-size: 1.1rem;
+      min-height: 140px;
+      color: #cce7ff;
+      user-select: text;
+      position: relative;
+      z-index: 11;
+      text-align: center;
+      line-height: 1.6;
+      font-family: 'Courier New', monospace;
+      margin-top: 15px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.8s ease-out;
+    }
+  </style>
+</head>
+<body>
+  <h1>Kalkulator Konversi Bilangan</h1>
+
+  <div class="container">
+    <label for="angka">Masukkan Angka:</label>
+    <input type="text" id="angka" placeholder="Contoh: -1010 atau 1A" />
+
+    <label for="basis">Pilih Basis:</label>
+    <select id="basis">
+      <option value="2">Biner</option>
+      <option value="8">Oktal</option>
+      <option value="10" selected>Desimal</option>
+      <option value="16">Hexa</option>
+    </select>
+
+    <label for="keBasis">Konversi ke:</label>
+    <select id="keBasis">
+      <option value="2">Biner</option>
+      <option value="8">Oktal</option>
+      <option value="10">Desimal</option>
+      <option value="16">Hexadesimal</option>
+    </select>
+
+    <button onclick="konversi()">Konversi</button>
+
+    <div class="output" id="hasil"></div>
+    <div class="output" id="algoritma"></div>
+  </div>
+
+  <script>
+    function konversi() {
+      const angkaInput = document.getElementById("angka").value.trim();
+      const basis = parseInt(document.getElementById("basis").value);
+      const keBasis = parseInt(document.getElementById("keBasis").value);
+      const hasilDiv = document.getElementById("hasil");
+      const algoritmaDiv = document.getElementById("algoritma");
+
+      if (angkaInput === "") {
+        hasilDiv.innerText = "Silakan masukkan angka.";
+        algoritmaDiv.innerText = "";
+        return;
+      }
+
+      const isNegative = angkaInput.startsWith("-");
+      const angkaPositif = isNegative ? angkaInput.slice(1) : angkaInput;
+
+      let desimal;
+      try {
+        if ((basis === 2 && !/^[01]+$/.test(angkaPositif)) ||
+            (basis === 8 && !/^[0-7]+$/.test(angkaPositif)) ||
+            (basis === 16 && !/^[0-9A-Fa-f]+$/.test(angkaPositif))) {
+          desimal = parseInt(angkaPositif, 10);
+        } else {
+          desimal = parseInt(angkaPositif, basis);
+        }
+        if (isNaN(desimal)) throw "error";
+      } catch {
+        hasilDiv.innerText = "Input tidak valid untuk basis yang dipilih.";
+        algoritmaDiv.innerText = "";
+        return;
+      }
+
+      const nilai = isNegative ? -desimal : desimal;
+      let hasilKonversi = Math.abs(nilai).toString(keBasis).toUpperCase();
+      if (isNegative) hasilKonversi = "-" + hasilKonversi;
+
+      let penjabaran = "";
+      if (basis === 2 || basis === 8 || basis === 10) {
+        const steps = angkaPositif.split('').reverse().map((digit, i) => {
+          const nilaiDigit = parseInt(digit, basis);
+          const pangkat = Math.pow(basis, i);
+          const hasil = nilaiDigit * pangkat;
+          return `${digit} × ${basis}^${i} = ${hasil}`;
+        });
+
+        const hasilArray = angkaPositif.split('').reverse().map((digit, i) => {
+          const nilaiDigit = parseInt(digit, basis);
+          return nilaiDigit * Math.pow(basis, i);
+        });
+
+        const jumlahTotal = hasilArray.join(' + ') + ' = ' + hasilArray.reduce((a, b) => a + b, 0);
+        penjabaran = steps.join('\n') + `\n= ${Math.abs(desimal)}\nJumlah total = ${jumlahTotal}`;
+      } else if (basis === 16) {
+        const steps = angkaPositif.toUpperCase().split('').reverse().map((ch, i) => {
+          const val = parseInt(ch, 16);
+          const hasil = val * Math.pow(16, i);
+          return `${ch}(${val}) × 16^${i} = ${hasil}`;
+        });
+        penjabaran = steps.join('\n') + `\n= ${Math.abs(desimal)}`;
+      } else {
+        penjabaran = `${desimal} (sudah desimal)`;
+      }
+
+      const langkah = `Langkah Konversi dari basis ${basis} ke basis ${keBasis}:\n\n1. Ubah ke :\n   - Input: ${angkaInput}\n   - Basis: ${basis}\n   - Perhitungan:\n   ${penjabaran}\n\n2. Konversi ke basis ${keBasis}:\n   => ${hasilKonversi}`;
+
+      hasilDiv.classList.remove("fade-in");
+      void hasilDiv.offsetWidth;
+      hasilDiv.innerText = langkah;
+      hasilDiv.classList.add("fade-in");
+
+      algoritmaDiv.classList.remove("fade-in");
+      void algoritmaDiv.offsetWidth;
+      algoritmaDiv.innerText = "Penjabaran Algoritma:\n\n" + penjabaran;
+      algoritmaDiv.classList.add("fade-in");
+    }
+  </script>
+</body>
+</html>
